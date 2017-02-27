@@ -67,4 +67,17 @@ class UnoUrlUtils {
     public static UnoUrl socket(int port) {
         return UnoUrl.parseUnoUrl("socket,host=127.0.0.1,port=" + port + ",tcpNoDelay=1;urp;StarOffice.ServiceManager");
     }
+
+    /**
+     * Creates an UnoUrl for the specified port.
+     *
+     * @param host
+     *            the host
+     * @param port
+     *            the port.
+     * @return the created UnoUrl.
+     */
+    public static UnoUrl socket(String host, int port) {
+        return UnoUrl.parseUnoUrl("socked,host=" + host + ",port=" + port + ",tcpNoDelay=1;urp;StarOffice.ServiceManager");
+    }
 }

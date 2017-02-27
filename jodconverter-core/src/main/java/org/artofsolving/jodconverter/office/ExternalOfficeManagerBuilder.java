@@ -20,6 +20,7 @@ import com.sun.star.lib.uno.helper.UnoUrl;
 public class ExternalOfficeManagerBuilder {
 
     private OfficeConnectionProtocol connectionProtocol;
+    private String host;
     private int portNumber;
     private String pipeName = "office";
     private boolean connectOnStart = true;
@@ -28,7 +29,7 @@ public class ExternalOfficeManagerBuilder {
      * Creates a new instance of the class.
      */
     public ExternalOfficeManagerBuilder() {
-
+        host = "127.0.0.1";
         connectionProtocol = OfficeConnectionProtocol.SOCKET;
         portNumber = 2002;
         pipeName = "office";
@@ -42,7 +43,7 @@ public class ExternalOfficeManagerBuilder {
      */
     public OfficeManager build() {
 
-        UnoUrl unoUrl = connectionProtocol == OfficeConnectionProtocol.SOCKET ? UnoUrlUtils.socket(portNumber) : UnoUrlUtils.pipe(pipeName);
+        UnoUrl unoUrl = connectionProtocol == OfficeConnectionProtocol.SOCKET ? UnoUrlUtils.socket(host, portNumber) : UnoUrlUtils.pipe(pipeName);
         return new ExternalOfficeManager(unoUrl, connectOnStart);
     }
 
@@ -81,6 +82,19 @@ public class ExternalOfficeManagerBuilder {
     public ExternalOfficeManagerBuilder setPipeName(String pipeName) {
 
         this.pipeName = pipeName;
+        return this;
+    }
+
+    /**
+     * Sets the port number that will be use to communicate with office.
+     *
+     * @param host
+     *            the host number to use.
+     * @return the updated configuration.
+     */
+    public ExternalOfficeManagerBuilder setHost(String host) {
+
+        this.host = host;
         return this;
     }
 
