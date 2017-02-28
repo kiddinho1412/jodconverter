@@ -78,6 +78,6 @@ class UnoUrlUtils {
      * @return the created UnoUrl.
      */
     public static UnoUrl socket(String host, int port) {
-        return UnoUrl.parseUnoUrl("socked,host=" + host + ",port=" + port + ",tcpNoDelay=1;urp;StarOffice.ServiceManager");
+        return UnoUrl.parseUnoUrl("socket,host=" + host + ",port=" + port + ",tcpNoDelay=1;urp;StarOffice.ServiceManager");
     }
 }
