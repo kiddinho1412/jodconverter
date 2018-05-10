@@ -63,8 +63,8 @@ public abstract class AbstractProcessManager implements ProcessManager {
         for (String line : execute(getCurrentProcessesCommand())) {
             Matcher lineMatcher = processLinePattern.matcher(line);
             if (lineMatcher.matches()) {
-                String commandLine = lineMatcher.group(1);
-                String pid = lineMatcher.group(2);
+                String commandLine = lineMatcher.group(2);
+                String pid = lineMatcher.group(1);
                 Matcher commandMatcher = commandPattern.matcher(commandLine);
                 if (commandMatcher.find()) {
                     return Long.parseLong(pid);

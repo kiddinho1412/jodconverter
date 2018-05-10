@@ -1,19 +1,19 @@
 package org.artofsolving.jodconverter.office;
 
-import static org.junit.Assert.*;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.artofsolving.jodconverter.AbstractOfficeTask;
 import org.artofsolving.jodconverter.OfficeDocumentUtils;
 import org.artofsolving.jodconverter.SaveAndCloseOfficeTask;
 import org.artofsolving.jodconverter.TextReplaceOfficeTask;
-import org.artofsolving.jodconverter.office.ExternalOfficeManager;
-import org.artofsolving.jodconverter.office.OfficeProcess;
-import org.artofsolving.jodconverter.office.OfficeUtils;
-import org.artofsolving.jodconverter.office.UnoUrlUtils;
 import org.artofsolving.jodconverter.process.PureJavaProcessManager;
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class TestSaveAndCloseTask {
 	ExternalOfficeManager manager=null;
 	AbstractOfficeTask task=null; 
 	
-	String source="C:\\tmp\\source.odt";
+	String source=null;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -43,8 +43,19 @@ public class TestSaveAndCloseTask {
         }
 
         manager = new ExternalOfficeManager(unoUrl, true);
-        manager.start();   
+        manager.start();
         
+        InputStream is = this.getClass().getResourceAsStream("/documents/test.odt");
+        File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".odt");
+        OutputStream os = null;
+        try {
+        	os = new FileOutputStream(tempFile);
+        	IOUtils.copy(is, os);
+            source = tempFile.getAbsolutePath();
+        }
+        finally {
+        	os.close();
+        }
 	}
 
 	@After

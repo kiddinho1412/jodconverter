@@ -208,6 +208,11 @@ public class JodConverterBean implements InitializingBean, DisposableBean {
 
         documentConverter.convert(inputFile, outputFile);
     }
+    
+    public void convert(File inputFile, File outputFile, DocumentFormat outputFormat) throws Exception {
+
+        documentConverter.convert(inputFile, outputFile, outputFormat);
+    }
 
     @Override
     public void destroy() throws Exception {
@@ -498,5 +503,9 @@ public class JodConverterBean implements InitializingBean, DisposableBean {
 		officeManager.execute(task);
 		//The task will save the document, dispose it, and clear the document variable of the manager to null.
 		
+    }
+    
+    public boolean isRunning() {
+    	return this.officeManager != null && this.officeManager.isRunning();
     }
 }

@@ -136,6 +136,7 @@ class OfficeProcess {
                 pid != PID_UNKNOWN ? " (pid " + pid + ")" : "");
 
         try {
+        	logger.info("=>>>>>>>>>>>>>>>>>>>> OFFICE HOME:  " + officeHome.getPath());
             processManager.kill(process, pid);
             return getExitCode(retryInterval, retryTimeout);
         } catch (IOException ioEx) {
@@ -302,6 +303,7 @@ class OfficeProcess {
 
         // Launch the process.
         logger.info("Starting process with acceptString '{}' and profileDir '{}'", acceptString, instanceProfileDir);
+        logger.info("=>>>>>>>>>>>>>>>>>>>> OFFICE HOME:  " + officeHome.getPath());
         try {
             process = processBuilder.start();
             pid = processManager.findPid(processQuery);

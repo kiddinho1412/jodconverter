@@ -4,7 +4,12 @@ import static org.junit.Assert.*;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.artofsolving.jodconverter.OfficeDocumentUtils;
 import org.artofsolving.jodconverter.TextReplaceOfficeTask;
@@ -26,7 +31,7 @@ public class TestTextReplaceTask {
 	ExternalOfficeManager manager=null;
 	TextReplaceOfficeTask task=null; 
 	
-	String source="C:\\tmp\\source.rtf";
+	String source=null;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -42,7 +47,17 @@ public class TestTextReplaceTask {
 
         manager = new ExternalOfficeManager(unoUrl, true);
         manager.start();   
-        
+        InputStream is = this.getClass().getResourceAsStream("/documents/test.rtf");
+        File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".rtf");
+        OutputStream os = null;
+        try {
+        	os = new FileOutputStream(tempFile);
+        	IOUtils.copy(is, os);
+            source = tempFile.getAbsolutePath();
+        }
+        finally {
+        	os.close();
+        }
 	}
 
 	@After

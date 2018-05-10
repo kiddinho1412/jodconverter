@@ -50,7 +50,7 @@ public class WindowsProcessManager extends AbstractProcessManager {
     @Override
     protected String[] getCurrentProcessesCommand() {
 
-        return new String[] { "wmic", "process", "get", "CommandLine,ProcessId" };
+        return new String[] { "wmic", "process", "get", "ProcessId,CommandLine" };
     }
 
     @Override

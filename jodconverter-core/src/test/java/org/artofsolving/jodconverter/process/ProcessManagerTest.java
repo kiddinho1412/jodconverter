@@ -23,14 +23,13 @@ import org.testng.annotations.Test;
 @Test
 public class ProcessManagerTest {
 
-    public void unixProcessManager() throws Exception {
+	public void unixProcessManager() throws Exception {
         if (PlatformUtils.isMac() || PlatformUtils.isWindows()) {
             throw new SkipException("UnixProcessManager only works on Unix");
         }
         ProcessManager processManager = new UnixProcessManager();
         Process process = new ProcessBuilder("sleep", "5s").start();
         ProcessQuery query = new ProcessQuery("sleep", "5s");
-
         long pid = processManager.findPid(query);
         assertFalse(pid == ProcessManager.PID_NOT_FOUND);
         Number javaPid = (Number) FieldUtils.readDeclaredField(process, "pid", true);

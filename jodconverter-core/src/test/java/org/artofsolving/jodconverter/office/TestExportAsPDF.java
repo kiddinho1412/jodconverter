@@ -4,7 +4,12 @@ import static org.junit.Assert.*;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.artofsolving.jodconverter.AbstractOfficeTask;
 import org.artofsolving.jodconverter.ExportAsPDFOfficeTask;
@@ -29,7 +34,7 @@ public class TestExportAsPDF {
 	ExternalOfficeManager manager=null;
 	AbstractOfficeTask task=null; 
 	
-	String source="C:\\tmp\\source.odt";
+	String source=null;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,7 +50,17 @@ public class TestExportAsPDF {
 
         manager = new ExternalOfficeManager(unoUrl, true);
         manager.start();   
-        
+        InputStream is = this.getClass().getResourceAsStream("/documents/test.odt");
+        File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".odt");
+        OutputStream os = null;
+        try {
+        	os = new FileOutputStream(tempFile);
+        	IOUtils.copy(is, os);
+            source = tempFile.getAbsolutePath();
+        }
+        finally {
+        	os.close();
+        }
 	}
 
 	@After

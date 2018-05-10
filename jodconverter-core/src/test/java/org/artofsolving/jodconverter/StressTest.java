@@ -27,7 +27,7 @@ import org.artofsolving.jodconverter.office.OfficeManager;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-@Test(groups = "functional")
+//@Test(groups = "functional")
 public class StressTest {
     
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(StressTest.class);
